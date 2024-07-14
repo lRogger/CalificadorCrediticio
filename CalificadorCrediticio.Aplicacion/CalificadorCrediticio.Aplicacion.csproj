@@ -12,8 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Usuario\" />
+    <None Remove="Autenticacion\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Usuario\" />
+    <Folder Include="Autenticacion\" />
   </ItemGroup>
 </Project>

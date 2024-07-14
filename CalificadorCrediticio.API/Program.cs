@@ -1,7 +1,14 @@
-﻿using CalificadorCrediticio.Aplicacion.Usuario;
+﻿using System.Text;
+using CalificadorCrediticio.API.Controllers.v1.Autenticacion;
+using CalificadorCrediticio.Aplicacion.Autenticacion;
+using CalificadorCrediticio.Aplicacion.Usuario;
 using CalificadorCrediticio.Dominio;
+using CalificadorCrediticio.Dominio.Helper;
 using CalificadorCrediticio.Dominio.Usuario;
+using CalificadorCrediticio.Infraestructura.Seguridad;
 using CalificadorCrediticio.Infraestructura.Usuario;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +28,29 @@ builder.Services.AddSwaggerGen();
  */
 builder.Services.AddScoped<IGuardarUsuario, GuardarUsuario>();
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+builder.Services.AddScoped<IGenerarToken, GenerarToken>();
+builder.Services.AddScoped<ValidarCredenciales>();
+builder.Services.AddScoped<GenerardorToken>();
 
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Seguridad:issuer"],
+        ValidAudience = builder.Configuration["Seguridad:issuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Seguridad:key"]))
+    };
+});
 
 var app = builder.Build();
 

@@ -1,5 +1,6 @@
 ﻿
 using CalificadorCrediticio.Dominio.Usuario;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CalificadorCrediticio.API.Controllers.v0
@@ -23,9 +24,10 @@ namespace CalificadorCrediticio.API.Controllers.v0
 
         [HttpPost]
         [Route("Obtener")]
-        public void Obtener(string Nombre, string Correo)
+        [Authorize(Roles = "Admin1")]
+        public ActionResult<string> Obtener()
         {
-            this.GuardarUsuario.Guardar(Nombre, Correo);
+            return "oka";
         }
 
     }

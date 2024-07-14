@@ -7,8 +7,10 @@
 
   <ItemGroup>
     <None Remove="Usuario\" />
+    <None Remove="Helper\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Usuario\" />
+    <Folder Include="Helper\" />
   </ItemGroup>
 </Project>

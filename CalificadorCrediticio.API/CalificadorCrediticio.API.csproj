@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.32" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,8 +21,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Controllers\v1\" />
+    <None Remove="Controllers\v1\Autenticacion\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\v1\" />
+    <Folder Include="Controllers\v1\Autenticacion\" />
   </ItemGroup>
 </Project>
